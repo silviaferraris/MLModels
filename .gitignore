@@ -1,0 +1,26 @@
+# Ambiente virtuale
+.venv/
+
+# File di sistema macOS
+.DS_Store
+._*
+
+# File di cache e compilati Python
+__pycache__/
+*.pyc
+*.pyo
+
+# File PyCharm
+.idea/
+
+# File di log o temporanei
+*.log
+
+# PyCharm specific
+.idea/
+!/.idea/misc.xml
+!/.idea/modules.xml
+!/.idea/*.iml
+/.idea/workspace.xml
+/.idea/vcs.xml
+/.idea/profiles_settings.xml
