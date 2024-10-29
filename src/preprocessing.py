@@ -1,3 +1,5 @@
+import pandas as pd
+
 class DataPreprocessor:
     @staticmethod
     def rename_columns(df):
@@ -21,3 +23,29 @@ class DataPreprocessor:
         """
         missing_percentage = df.isnull().mean() * 100
         return df.loc[:, missing_percentage < threshold]
+
+    @staticmethod
+    def categorize_column(df, column, method='binning', bins=None, labels=None):
+        """
+        Trasforma una colonna continua in categorie secondo un metodo specifico.
+
+        :param df: Il DataFrame contenente i dati
+        :param column: Nome della colonna da trasformare
+        :param method: Metodo di categorizzazione ('binning', 'rounding', 'percentiles')
+        :param bins: Lista dei bordi degli intervalli (solo per 'binning')
+        :param labels: Etichette per i gruppi (solo per 'binning')
+        :return: DataFrame con la colonna trasformata
+        """
+        if method == 'binning':
+            if bins is None or labels is None:
+                raise ValueError("Binning method requires 'bins' and 'labels'")
+            df[f"{column}_categorized"] = pd.cut(df[column], bins=bins, labels=labels)
+
+        elif method == 'percentiles':
+            # Divide la colonna in quartili
+            df[f"{column}_categorized"] = pd.qcut(df[column], q=4, labels=['Q1', 'Q2', 'Q3', 'Q4'])
+
+        else:
+            raise ValueError("Method must be 'binning' or 'percentiles'")
+
+        return df
